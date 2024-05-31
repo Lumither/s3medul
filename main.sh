@@ -67,6 +67,7 @@ function s3upload() {
        -H "Content-Type: ${content_type}" \
        -H "Authorization: AWS ${S3KEY}:${signature}" \
        "https://${S3ENDPOINT}${resource}"
+  printf  "${file}\n\t-> https://${S3ENDPOINT}${resource}\n\n"
 }
 
 # push orig img
