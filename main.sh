@@ -66,7 +66,8 @@ function s3upload() {
        -H "Date: ${date}" \
        -H "Content-Type: ${content_type}" \
        -H "Authorization: AWS ${S3KEY}:${signature}" \
-       "https://${S3ENDPOINT}${resource}"
+       "https://${S3ENDPOINT}${resource}" \
+       --retry 5 --retry-all-errors
   printf  "%s - %s\n\t-> https://%s%s\n\n" "${file}" "$(du -sh "$file" | sed 's/\s.*//')" "${S3ENDPOINT}" "${resource}"
 }
 
