@@ -39,10 +39,10 @@ for pic in "${cvt_pics[@]}"; do
   raw_pic_name="$(basename "$pic")"
   new_png_path="${tmp_work_dir}/compr/${raw_pic_name}"
   new_webp_path="${new_png_path%.*}.webp"
-#  pngquant --speed 1 "$pic" --output "$new_png_path"
-#  if [ $? -eq 0 ]; then
-#    compr_pics+=("$new_png_path")
-#  fi
+  pngquant --speed 1 "$pic" --output "$new_png_path"
+  if [ $? -eq 0 ]; then
+    compr_pics+=("$new_png_path")
+  fi
   cwebp "$pic" -o "$new_webp_path" -quiet
   if [ $? -eq 0 ]; then
     compr_pics+=("$new_webp_path")

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # push file to s3 storage
+# usage:   path,  oss relative path,         endpoint,     bucket,     key,     secret key, mime type
+# s3upload "$pic" "pictures/compr/${f_name}" "$S3ENDPOINT" "$S3BUCKET" "$S3KEY" "$S3SECRET" "$mime"
 function s3upload() {
   local file="$1"
   local filepath="$2"
