@@ -1,2 +1,4 @@
 /.idea
 .env.local
+mime.csv
+/.venv

@@ -12,6 +12,7 @@ versions.
 - [`pngquant`](https://github.com/kornelski/pngquant): Compress png media
 - `openssl`: Authentication
 - `curl`: HTTP client
+- [`csvkit`](https://github.com/wireservice/csvkit): Parse .csv file
 
 ## Usage
 
