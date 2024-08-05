@@ -1,39 +1,25 @@
 import pandas as pd
+import requests
 
-categories = [
-    "application",
-    "audio",
-    "font",
-    "haptics",
-    "image",
-    "message",
-    "model",
-    "multipart",
-    "text",
-    "video",
-]
+source = "https://cdn.jsdelivr.net/gh/jshttp/mime-db@master/db.json"
 
-source = "https://www.iana.org/assignments/media-types/{c}.csv"
+mime_csv = []
 
-mime_csv = pd.DataFrame(columns=["ext", "typ"])
+print(f" Working on {source}... ", end="", flush=True)
+try:
+    res = requests.get(source)
+    res.raise_for_status()
+    data = res.json()
 
-cnt = 1
+    for (mime, val) in data.items():
+        if (extensions := val.get("extensions")) is not None:
+            for ext in extensions:
+                mime_csv.append({"ext": ext, "typ": mime})
+except Exception as e:
+    print("\033[91mERROR\033[0m")
+    print(f"    => url: {source}")
+    print(f"    => Error: {e}")
+else:
+    print("\033[92mSUCCESS\033[0m")
 
-for ctgy in categories:
-    url = source.format(c=ctgy)
-    print(f"({cnt}/{len(categories)}) Working on {url}... ", end="", flush=True)
-    try:
-        data = pd.read_csv(url, sep=",")
-        extract = data[["Name", "Template"]].rename(
-            columns={"Name": "ext", "Template": "typ"}
-        )
-        mime_csv = pd.concat([mime_csv, extract], ignore_index=True)
-    except Exception as e:
-        print("\033[91mERROR\033[0m")
-        print(f"    => url: {url}")
-        print(f"    => {e}")
-    else:
-        print("\033[92mSUCCESS\033[0m")
-    cnt += 1
-
-mime_csv.to_csv("mime.csv", index=False)
+pd.DataFrame(mime_csv).to_csv("~/.s3medul/mime.csv", index=False)

@@ -2,7 +2,7 @@
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-source "$DIR/.env"
+source "$DIR/.env
 source "$DIR/.env.local"
 
 source "$DIR/utils/get_mime.sh"
