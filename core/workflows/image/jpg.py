@@ -1,4 +1,4 @@
-from . import default
+from . import jpeg
 
-workflow = default.workflow
+workflow = jpeg.workflow
 

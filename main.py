@@ -1,6 +1,8 @@
 import json
 import os.path
 import sys
+import traceback
+from pathlib import Path
 
 import pandas as pd
 
@@ -46,9 +48,10 @@ def main():
         try:
             wf_msg = {
                 "wf_orig_path": f_path,
-                "wf_work_path": f_path,
-                "wf_compress": args.compress,
-                "wf_cprs_path": [],
+                "args": args,
+                "registers": {
+                    "main.orig_path": f_path
+                },
                 "wf_upload_queue": [f_path],
                 "wf_remote_root_dir": config["REMOTE_ROOT_DIR"],
                 "wf_mime_db": mime_db,
@@ -58,8 +61,7 @@ def main():
                 wf_msg = func(wf_msg)
             print(Ansi.blend(Ansi.GREEN, f"  => Success"))
         except Exception as e:
-            print(Ansi.blend(Ansi.RED, f"  => Error: {str(e)}"), file=sys.stderr)
-
+            print(Ansi.blend(Ansi.RED, f"  => Error: {str(e)}\n{traceback.format_exc()}"), file=sys.stderr)
         cnt += 1
 
 
